@@ -11,3 +11,6 @@ The Witmotion Sensors WT901SD* output binary Data to .txt Files to the SD Card. 
 - clone this repo
 - install Streamlit https://streamlit.io/
 - run the Application with ```streamlit run streamlit_app.py```
+
+# UI Screenshot
+![Screenshot](doc/screen_converter.PNG)
