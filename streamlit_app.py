@@ -6,6 +6,7 @@ from witmotion_converter import WitMotionConverter
 
 st.title('Witmotion Binary Converter')
 st.caption('This Tool converts the acceleration output of witmotion Offline Dataloggers (WT901SD*) to a csv File.')
+st.caption('[GitHub](https://github.com/auenkind/witmotion-online-converter)')
 uploaded_file = st.file_uploader("Input File")
 if uploaded_file is not None:
     basename = os.path.splitext(uploaded_file.name)[0]
