@@ -26,11 +26,28 @@ class WitMotionConverter:
             t += timeStep
         return res
     
+    def get_angles(self, data):
+        marker = b'U' + b'S'
+        t = 0
+        timeStep = 0.05
+        msgs_num = 0
+        res = []
+        parts = data.split(marker)
+        for part in parts:
+            p = b'S'+part
+            q = self.get_angle(p)
+            if q is not None:
+                d = [msgs_num, t, q[0], q[1], q[2]]
+                res.append(d)
+                msgs_num += 1
+            t += timeStep
+        return res
+    
     def get_acceleration(self, data):
         if len(data) < 7:
             return None
         cmd = struct.unpack('c', data[0:1])[0]
-        if cmd == b'Q': # 0x54
+        if cmd == b'Q':
             return np.array(struct.unpack('<hhh', data[1:7]))/32768.0*16.0
         return None
 
@@ -38,7 +55,7 @@ class WitMotionConverter:
         if len(data) < 7:
             return None
         cmd = struct.unpack('c', data[0:1])[0]
-        if cmd == b'R': # 0x54
+        if cmd == b'R':
             return np.array(struct.unpack('<hhh', data[1:7]))/32768.0*2000.0
         return None
 
@@ -46,7 +63,7 @@ class WitMotionConverter:
         if len(data) < 7:
             return None
         cmd = struct.unpack('c', data[0:1])[0]
-        if cmd == b'T': # 0x54
+        if cmd == b'T':
             return np.array(struct.unpack('<hhh', data[1:7]))
         return None
 
@@ -54,7 +71,7 @@ class WitMotionConverter:
         if len(data) < 7:
             return 
         cmd = struct.unpack('c', data[0:1])[0]
-        if cmd == b'S': # 0x53
+        if cmd == b'S':
             return np.array(struct.unpack('<hhh', data[1:7]))/32768.0*180.0 
         return None
 
